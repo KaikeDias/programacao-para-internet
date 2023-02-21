@@ -1,5 +1,4 @@
 import requests
-import requests_cache
 from pprint import pprint
 import os
 
@@ -7,7 +6,7 @@ if not os.path.exists('images') :
     os.makedirs('images')
 
 url = input('Type the URL of image that you want to download: ')
-name_file = input('Type the name of image file: ')
+name_file = input('Type the image file name: ')
 
 path = os.path.join('images', f"{name_file}.jpg")
 response = requests.get(url)
