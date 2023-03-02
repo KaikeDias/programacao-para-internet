@@ -2,6 +2,8 @@ import requests
 import requests_cache
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import urllib3
+urllib3.disable_warnings()
 
 requests_cache.install_cache('data')
 
@@ -47,6 +49,7 @@ def getLinks(url,soup):
     return links
     
 def search(url, palavra_chave, profundidade):
+    print('acessando: ', url    )
     soup = baixarPagina(url)
     resultados = buscarPalavraChave(soup, palavra_chave)
     links = getLinks(url, soup)
@@ -64,9 +67,9 @@ def search(url, palavra_chave, profundidade):
                 search(link, palavra_chave, profundidade-1)
 
 def main():
-    url = 'http://127.0.0.1:5500/paginas-exemplo/omega-page.html'
-    palavra_chave = 'coffee'
-    profundidade = 2
+    url = 'https://flutter.dev/'
+    palavra_chave = 'app'
+    profundidade = 1
 
     search(url, palavra_chave, profundidade)
 
