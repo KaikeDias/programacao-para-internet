@@ -75,6 +75,7 @@ def main():
 
     for url, pagina in paginasVisitadas.items():
         print('Pagina visitada: ', pagina.url)
+        print('Numero de ocorrencias da palavra chave: ', len(pagina.resultados))
         print('Ocorrencias da palavra chave: ', pagina.resultados)
         print('--------------------------------------------------------------------')
 
