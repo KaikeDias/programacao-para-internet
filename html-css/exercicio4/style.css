@@ -1,0 +1,25 @@
+* {
+    color: white;
+}
+
+body {
+    background-image: url(imagens/fundo_matrix.jpg);
+}
+
+.matrix-text {
+    text-align: justify;
+}
+
+#titulo-rodape {
+    text-align: right;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 125px;
+    background-image: url(imagens/fundo_neo.jpg);
+    background-repeat: repeat-x;
+  }

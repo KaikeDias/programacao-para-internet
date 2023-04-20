@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- o textContent altera apenas o texto dentro de algum elemento sem levar em conta as tags que estao dentro,ja o innnerHTML pode alterar o texto e colocar tags dentro do elemento -->
+
+    <p id="id1"></p>
+    <p id="id2"></p>
+
+    <script>
+        const elemento1 = document.getElementById('id1')
+        const elemento2 = document.getElementById('id2')
+
+        elemento1.textContent = 'Exemplo de textContent'
+        elemento2.innerHTML = '<em>Exemplo de innerHTML</em>'
+    </script>
+</body>
+</html>

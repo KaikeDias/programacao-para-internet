@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p class="texto">Texto exemplo</p>
+
+    <p class="texto">Clique no botao para mudar o texto de cor</p>
+    <button id="botao">Clique aqui</button>
+    
+    <p class="texto">Clique no botao para reverter a cor</p>
+    <button id="botao2">Clique aqui</button>
+
+    <script>
+        const botao = document.getElementById("botao");
+
+        botao.addEventListener("click", function() {
+            const textos = document.getElementsByClassName('texto');
+            for(let i = 0; i < textos.length; i++) {
+                textos[i].style.color = "white";
+            }
+            document.body.style.backgroundColor = "black";
+        });
+        
+        const botao2 = document.getElementById("botao2");
+
+        botao2.addEventListener("click", function() {
+            const textos = document.getElementsByClassName('texto');
+            for(let i = 0; i < textos.length; i++) {
+                textos[i].style.color = "black";
+            }
+            document.body.style.backgroundColor = "white";
+        });
+    </script>
+</body>
+</html>

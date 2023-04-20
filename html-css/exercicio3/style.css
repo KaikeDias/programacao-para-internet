@@ -1,0 +1,79 @@
+* {
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: TiltNeon-Regular;
+    src: url(fonts/TiltNeon-Regular.ttf);
+}
+
+body {
+    font-family: Arial;
+    background: linear-gradient(to right #b3cce2, #D9CCC1);
+}
+
+h1 {
+    font-size: 3rem;
+    letter-spacing: .5rem;
+    background-color: #005eb0;
+    color: #D9CCC1;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    background-color: #005eb0;
+    color: #D9CCC1;
+}
+
+p {
+    font-size: 1.0rem;
+    color: #024059;
+}
+
+.date {
+    color: darkslategray;
+    font-size: .8rem;
+    text-align: left;
+}
+
+.author {
+    color: darkslategray;
+    text-align: right;
+}
+
+.motivation-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.motivation {
+    font-family: TiltNeon-Regular;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+#author-motivation-text {
+    color: black;
+    font-weight: bold;
+}
+
+.strikethrough {
+    position: relative;
+  }
+
+.strikethrough:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    right: 0;
+    border-top: 1px solid;
+    border-color: inherit;
+    
+    -webkit-transform:rotate(-5deg);
+    -moz-transform:rotate(-5deg);
+    -ms-transform:rotate(-5deg);
+    -o-transform:rotate(-5deg);
+    transform:rotate(-5deg);
+}
