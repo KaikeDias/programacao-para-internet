@@ -13,7 +13,13 @@ export default class DatabaseRepository {
             POST_ID TEXT PRIMARY KEY NOT NULL,
             POST_TEXT TEXT NOT NULL,
             LIKES INT NOT NULL 
-        )
+        );
+
+        CREATE TABLE IF NOT EXISTS COMMENT(
+            COMMENT_ID TEXT PRIMARY KEY NOT NULL,
+            CONTENT TEXT NOT NULL,
+            POST_ID REFERENCES POST(POST_ID)
+        );
         `);
 
         return repository;

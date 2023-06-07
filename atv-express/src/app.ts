@@ -3,6 +3,7 @@ import MicroBlog from './models/microblog';
 import Post from './models/post';
 import DatabaseRepository from './repositories/database_repository';
 import { MicroBlogPersistente } from './repositories/microblog_persistente';
+import CommentRepository from './repositories/comment_repository';
 const { v4: uuidv4 } = require('uuid');
 
 (async () => {
@@ -13,6 +14,7 @@ const { v4: uuidv4 } = require('uuid');
 
     const repository: DatabaseRepository = await DatabaseRepository.initialize('./database/data.db');
     let microBlogPersistente = new MicroBlogPersistente(repository.database) 
+    let commentRepository = new CommentRepository(repository.database);
 
     microblog.create(
         {
@@ -64,7 +66,7 @@ const { v4: uuidv4 } = require('uuid');
     });
 
     app.post('/posts',async (request: Request, response: Response) => {
-        const id = uuidv4();
+        const id = '1'
         await microBlogPersistente.createPost({id: id, text: request.body.text, likes: 0})
         // const createdPost: Post = microblog.create({ id: id, text: request.body.text, likes: 0 });
         const createdPost = await microBlogPersistente.retrievePost(id);
@@ -122,6 +124,26 @@ const { v4: uuidv4 } = require('uuid');
 
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);
+    });
+
+    //comment routes
+    app.post('/posts/comments',async (request: Request, response: Response) => {
+        const commentId = uuidv4();
+        await commentRepository.createComment({commentId: commentId, content: request.body.content, postId: request.body.postId});
+        // const createdPost: Post = microblog.create({ id: id, text: request.body.text, likes: 0 });
+        const createdComment = await commentRepository.getCommentById(commentId);
+
+        response.status(201).json(createdComment);
+    });
+
+    app.get('/posts/comments/:id', async(request: Request, response: Response) => {
+        try {
+            const comments = await commentRepository.getAllComments(request.params.id);
+
+            response.status(200).json(comments);
+        } catch (error) {
+            response.status(404).send("Can't find comments in the database");
+        }
     });
 
 })();
