@@ -137,7 +137,7 @@ import cors from 'cors';
 
     //comment routes
     app.post('/posts/comments', async (request: Request, response: Response) => {
-        const commentId = uuidv4();
+        const commentId = '1';
 
         await commentRepository.createComment({
             commentId: commentId,
@@ -149,6 +149,16 @@ import cors from 'cors';
         const createdComment = await commentRepository.getCommentById(commentId);
 
         response.status(201).json(createdComment);
+    });
+
+    app.get('/posts/comments/all/:id', async (request: Request, response: Response) => {
+        try {
+            const comments = await commentRepository.getAllComments(request.params.id);
+
+            response.status(200).json(comments);
+        } catch (error) {
+            response.status(404).send("Can't find posts in the database");
+        }
     });
 
     app.get('/posts/comments/:id', async (request: Request, response: Response) => {
@@ -164,4 +174,28 @@ import cors from 'cors';
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);
     });
+
+    app.delete('/posts/comments/:id', async (request: Request, response: Response) => {
+        try {
+            await microBlogPersistente.removerPost(request.params.id);
+            response.status(204).send();
+        } catch (error) {
+            response.status(404).send("Can't find this comment");
+        }
+    });
+
+    app.put('/posts/comments/:id', async (request: Request, response: Response) => {
+        try {
+            const selectedComment = await commentRepository.getCommentById(request.params.id);
+
+            selectedComment.content = request.body.content;
+
+            await commentRepository.updateComment(selectedComment);
+            const updatedComment = await commentRepository.getCommentById(request.params.id);
+            response.status(200).json(updatedComment);
+        } catch (error) {
+            response.status(404).send("Can't find this post");
+        }
+    });
+
 })();

@@ -9,14 +9,14 @@ export default class CommentRepository {
     }
 
     async createComment(comment: Comment): Promise<void> {
-        await this.database.run(
-            `INSERT INTO COMMENT(CONTENT,POST_ID) VALUES('${comment.content}','${comment.postId}')`
-        );
+        await this.database.run(`INSERT INTO COMMENT (COMMENT_ID, CONTENT, POST_ID) VALUES (?, ?, ?);`, comment.commentId, comment.content, comment.postId);
+
     }
 
     async getAllComments(id: string): Promise<Comment[]> {
         const data: Object | undefined = await this.database.all(`SELECT * FROM COMMENT WHERE POST_ID = '${id}'`);
 
+        
         if (data == undefined) {
             throw new Error('Post inexistente');
         } else {
@@ -26,7 +26,7 @@ export default class CommentRepository {
         }
     }
 
-    async getCommentById(id: string) {
+    async getCommentById(id: string): Promise<Comment> {
         const data: Object | undefined = await this.database.get(`SELECT * FROM COMMENT WHERE COMMENT_ID = '${id}'`);
 
         if (data == undefined) {
@@ -49,10 +49,7 @@ export default class CommentRepository {
         );
     }
 
-    async deleteComment(deletedComment: Comment) {
-        const comment: Comment = await this.getCommentById(deletedComment.commentId);
-        const id: String = comment.commentId;
-
+    async deleteComment(id: string) {
         await this.database.run(`DELETE FROM COMMENT WHERE COMMENT_ID = ?`, id);
     }
 }

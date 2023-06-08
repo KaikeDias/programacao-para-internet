@@ -12,6 +12,7 @@ export default class Comment {
     static fromMap(data: Object): Comment {
         const values: any[] = Object.values(data);
 
-        return new Comment(values[0], values[1], values[2]);
-    }
+        const newCommment = new Comment(values[0], values[1], values[2]);
+        return newCommment
+    }   
 }
