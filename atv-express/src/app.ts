@@ -177,7 +177,7 @@ import cors from 'cors';
 
     app.delete('/posts/comments/:id', async (request: Request, response: Response) => {
         try {
-            await microBlogPersistente.removerPost(request.params.id);
+            await commentRepository.deleteComment(request.params.id);
             response.status(204).send();
         } catch (error) {
             response.status(404).send("Can't find this comment");
