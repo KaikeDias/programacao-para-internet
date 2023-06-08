@@ -22,8 +22,8 @@ class MicroBlog {
             return null;
         }
     }
-    delete(deletedPost) {
-        const postIndex = this.Posts.findIndex((post) => post.id === deletedPost.id);
+    delete(id) {
+        const postIndex = this.Posts.findIndex((post) => post.id === id);
         if (postIndex !== -1) {
             const deleted = this.Posts.splice(postIndex, 1);
             return deleted[0];

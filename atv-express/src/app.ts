@@ -16,21 +16,21 @@ const { v4: uuidv4 } = require('uuid');
     let microBlogPersistente = new MicroBlogPersistente(repository.database) 
     let commentRepository = new CommentRepository(repository.database);
 
-    microblog.create(
-        {
-            id: '1',
-            text: 'loren',
-            likes: 5
-        }
-    );
+    // microblog.create(
+    //     {
+    //         id: '1',
+    //         text: 'loren',
+    //         likes: 5
+    //     }
+    // );
 
-    microblog.create(
-        {
-            id: '2',
-            text: 'ipslum',
-            likes: 10
-        }
-    );
+    // microblog.create(
+    //     {
+    //         id: '2',
+    //         text: 'ipslum',
+    //         likes: 10
+    //     }
+    // );
 
     app.use(express.json());
 
@@ -67,8 +67,13 @@ const { v4: uuidv4 } = require('uuid');
 
     app.post('/posts',async (request: Request, response: Response) => {
         const id = '1'
-        await microBlogPersistente.createPost({id: id, text: request.body.text, likes: 0})
-        // const createdPost: Post = microblog.create({ id: id, text: request.body.text, likes: 0 });
+        await microBlogPersistente.createPost({
+            id: id,
+            text: request.body.text,
+            likes: 0,
+            title: request.body.title,
+            datePost: new Date()
+        });
         const createdPost = await microBlogPersistente.retrievePost(id);
 
         response.status(201).json(createdPost);
@@ -110,6 +115,11 @@ const { v4: uuidv4 } = require('uuid');
 
     app.patch('/posts/:id/like', async (request: Request, response: Response) => {
         try {
+            if(Object.keys(request.body).length !== 0) {
+                response.status(400).send('Bad request')
+                return
+            }
+
             const selectedPost: Post = await microBlogPersistente.retrievePost(request.params.id);
 
             selectedPost.likes++;

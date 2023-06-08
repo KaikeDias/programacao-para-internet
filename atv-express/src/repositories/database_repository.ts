@@ -12,7 +12,9 @@ export default class DatabaseRepository {
         CREATE TABLE IF NOT EXISTS POST(
             POST_ID TEXT PRIMARY KEY NOT NULL,
             POST_TEXT TEXT NOT NULL,
-            LIKES INT NOT NULL 
+            LIKES INT NOT NULL,
+            TITLE TEXT NOT NULL,
+            DATE_POST TIMESTAMP NOT NULL
         );
 
         CREATE TABLE IF NOT EXISTS COMMENT(
