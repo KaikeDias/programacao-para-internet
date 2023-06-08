@@ -65,14 +65,15 @@ const { v4: uuidv4 } = require('uuid');
         }
     });
 
-    app.post('/posts',async (request: Request, response: Response) => {
-        const id = '1'
+    app.post('/posts', async (request: Request, response: Response) => {
+        const id = uuidv4();
+
         await microBlogPersistente.createPost({
             id: id,
             text: request.body.text,
             likes: 0,
             title: request.body.title,
-            datePost: new Date()
+            datePost: new Date(),
         });
         const createdPost = await microBlogPersistente.retrievePost(id);
 

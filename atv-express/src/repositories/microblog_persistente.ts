@@ -9,7 +9,14 @@ export class MicroBlogPersistente {
     }
 
     async createPost(post: Post) {
-        await this.database.exec(`INSERT INTO POST(POST_ID,POST_TEXT,LIKES,TITLE,DATE_POST) VALUES('${post.id}','${post.text}', ${post.likes}, ${post.title}, ${post.datePost.toISOString()})`);
+        await this.database.run(
+            'INSERT INTO POST (POST_ID, POST_TEXT, LIKES, TITLE, DATE_POST) VALUES (?, ?, ?, ?, ?);',
+            post.id,
+            post.text,
+            post.likes,
+            post.title,
+            post.datePost.toISOString()
+        );
     }
 
     async retrievePost(id: string) {
