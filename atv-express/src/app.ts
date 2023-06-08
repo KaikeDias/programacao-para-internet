@@ -5,6 +5,7 @@ import DatabaseRepository from './repositories/database_repository';
 import { MicroBlogPersistente } from './repositories/microblog_persistente';
 import CommentRepository from './repositories/comment_repository';
 import { v4 as uuidv4 } from 'uuid';
+import cors from 'cors';
 
 (async () => {
     const app = express();
@@ -31,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
     //         likes: 10
     //     }
     // );
-
+    app.use(cors());
     app.use(express.json());
 
     app.get('/posts', async (request: Request, response: Response) => {
@@ -134,18 +135,16 @@ import { v4 as uuidv4 } from 'uuid';
         }
     });
 
-    app.listen(port, () => {
-        console.log(`Example app listening on port ${port}`);
-    });
-
     //comment routes
     app.post('/posts/comments', async (request: Request, response: Response) => {
         const commentId = uuidv4();
+
         await commentRepository.createComment({
             commentId: commentId,
             content: request.body.content,
             postId: request.body.postId,
         });
+
         // const createdPost: Post = microblog.create({ id: id, text: request.body.text, likes: 0 });
         const createdComment = await commentRepository.getCommentById(commentId);
 
@@ -160,5 +159,9 @@ import { v4 as uuidv4 } from 'uuid';
         } catch (error) {
             response.status(404).send("Can't find comments in the database");
         }
+    });
+
+    app.listen(port, () => {
+        console.log(`Example app listening on port ${port}`);
     });
 })();
